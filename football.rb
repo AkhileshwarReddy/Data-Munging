@@ -1,14 +1,13 @@
-football_data = File.read('./data/football.dat').lines
-team = nil
-min_diff = 1.0/0
-football_data.each_with_index do |line, index|
-    next if index == 0 or line.split.length != 10
-    line_data = line.split
-    diff = (line_data[8].to_i - line_data[6].to_i).abs
-    if diff < min_diff
-        min_diff = diff
-        team = line_data[1]
+require_relative "./data-extractor.rb"
+require_relative "./data-analyzer.rb"
+
+class Football
+    def initialize
+        @data_extractor = DataExtractor.new('./data/football.dat')
+        @data_analyzer = DataAnalyzer.new(@data_extractor.extract_data, [6,8], 1)
+    end
+
+    def get_min_difference
+        @data_analyzer.get_min_difference
     end
 end
-
-puts "#{team} : #{min_diff}"

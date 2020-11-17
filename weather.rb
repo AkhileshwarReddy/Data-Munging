@@ -1,14 +1,14 @@
-weather_data = File.read('./data/weather.dat').lines
-spread_min = 1.0/0
-day = 0
-weather_data.each_with_index do |line, index|
-    next if index == 0 or line.split.length == 0
-    line_data = line.split
-    spread = (line_data[1].to_i - line_data[2].to_i).abs
-    if spread < spread_min
-        spread_min = spread
-        day = line_data[0].to_i
+require_relative "./data-extractor.rb"
+require_relative "./data-analyzer.rb"
+
+class Weather
+    attr_writer :data_extractor, :data_analyzer
+    def initialize
+        @data_extractor = DataExtractor.new('./data/weather.dat');
+        @data_analyzer = DataAnalyzer.new(@data_extractor.extract_data, [1,2], 0)
+    end
+
+    def get_min_spread
+        return @data_analyzer.get_min_difference
     end
 end
-
-puts "#{day} : #{spread_min}"
