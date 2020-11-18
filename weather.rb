@@ -1,14 +1,9 @@
-require_relative "./data-extractor.rb"
-require_relative "./data-analyzer.rb"
+require_relative "./calculator.rb"
 
-class Weather
-    attr_writer :data_extractor, :data_analyzer
-    def initialize
-        @data_extractor = DataExtractor.new('./data/weather.dat');
-        @data_analyzer = DataAnalyzer.new(@data_extractor.extract_data, [1,2], 0)
-    end
+MnT = 1
+MxT = 2
+Day = 0
+FILEPATH = './data/weather.dat'
 
-    def get_min_spread
-        return @data_analyzer.get_min_difference
-    end
-end
+weather = Calculator.new(FILEPATH, [MnT, MxT], Day).get_min_difference
+puts weather.inspect

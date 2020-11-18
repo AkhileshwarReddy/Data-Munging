@@ -1,13 +1,9 @@
-require_relative "./data-extractor.rb"
-require_relative "./data-analyzer.rb"
+require_relative "./calculator.rb"
 
-class Football
-    def initialize
-        @data_extractor = DataExtractor.new('./data/football.dat')
-        @data_analyzer = DataAnalyzer.new(@data_extractor.extract_data, [6,8], 1)
-    end
+FOR_GOALS = 6
+AGAINST_GOALS = 8
+TEAM_INDEX = 1
+FILEPATH = './data/football.dat'
 
-    def get_min_difference
-        @data_analyzer.get_min_difference
-    end
-end
+football = Calculator.new(FILEPATH, [FOR_GOALS, AGAINST_GOALS], TEAM_INDEX).get_min_difference
+puts football.inspect
